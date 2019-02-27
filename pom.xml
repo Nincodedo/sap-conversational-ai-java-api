@@ -6,7 +6,7 @@
 
     <groupId>com.nincodedo</groupId>
     <artifactId>recastai-java-api</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
