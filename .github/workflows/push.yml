@@ -1,0 +1,12 @@
+on: push
+name: Maven build
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Build
+      uses: LucaFeger/action-maven-cli@9d8f23af091bd6f5f0c05c942630939b6e53ce44
+      with:
+        args: clean package
