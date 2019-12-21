@@ -1,6 +1,6 @@
-package com.nincodedo.recast.conversation;
+package com.nincodedo.sapconversational.conversation;
 
-import com.nincodedo.recast.RecastAPI;
+import com.nincodedo.sapconversational.SAPConversationalAIAPI;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -22,19 +22,19 @@ import java.util.Optional;
 @Slf4j
 public class BotConversationImpl implements BotConversation {
 
-    private RecastAPI recastAPI;
+    private SAPConversationalAIAPI SAPConversationalAIAPI;
     private String conversationId;
     private String userInput;
     private List<String> participantList;
 
-    public BotConversationImpl(RecastAPI recastAPI) {
-        this.recastAPI = recastAPI;
+    public BotConversationImpl(SAPConversationalAIAPI SAPConversationalAIAPI) {
+        this.SAPConversationalAIAPI = SAPConversationalAIAPI;
         this.conversationId = "1";
         participantList = new ArrayList<>();
     }
 
-    public BotConversationImpl(RecastAPI recastAPI, String conversationId) {
-        this.recastAPI = recastAPI;
+    public BotConversationImpl(SAPConversationalAIAPI SAPConversationalAIAPI, String conversationId) {
+        this.SAPConversationalAIAPI = SAPConversationalAIAPI;
         this.conversationId = conversationId;
         participantList = new ArrayList<>();
     }
@@ -67,8 +67,8 @@ public class BotConversationImpl implements BotConversation {
         this.userInput = input;
         String sResponse = null;
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost post = new HttpPost("https://api.recast.ai/build/v1/dialog");
-        post.addHeader("Authorization", "Token " + recastAPI.getToken());
+        HttpPost post = new HttpPost("https://api.cai.tools.sap/build/v1/dialog");
+        post.addHeader("Authorization", "Token " + SAPConversationalAIAPI.getToken());
         post.addHeader("Content-Type", "application/json");
         val stringEntityOptional = buildStringPostEntity();
         if (stringEntityOptional.isPresent()) {

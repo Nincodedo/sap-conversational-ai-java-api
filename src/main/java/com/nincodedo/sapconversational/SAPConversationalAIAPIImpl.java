@@ -1,13 +1,13 @@
-package com.nincodedo.recast;
+package com.nincodedo.sapconversational;
 
-import com.nincodedo.recast.conversation.BotConversation;
-import com.nincodedo.recast.conversation.BotConversationImpl;
+import com.nincodedo.sapconversational.conversation.BotConversation;
+import com.nincodedo.sapconversational.conversation.BotConversationImpl;
 
-class RecastAPIImpl implements RecastAPI {
+class SAPConversationalAIAPIImpl implements SAPConversationalAIAPI {
 
     private String token;
 
-    RecastAPI setToken(String token) {
+    SAPConversationalAIAPI setToken(String token) {
         this.token = token;
         return this;
     }
