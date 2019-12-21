@@ -1,2 +1,2 @@
-# recastai-java-api
-Unofficial Recast.AI Java api
+# sap-conversational-ai-java-api-java-api
+Unofficial SAP Conversational AI Java api

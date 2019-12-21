@@ -1,4 +1,4 @@
-package com.nincodedo.recast.conversation;
+package com.nincodedo.sapconversational.conversation;
 
 import java.util.Optional;
 

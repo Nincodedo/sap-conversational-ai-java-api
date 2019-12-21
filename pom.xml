@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.nincodedo</groupId>
-    <artifactId>recastai-java-api</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <artifactId>sap-conversational-ai-java-api</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -68,7 +68,7 @@
     <repository>
         <id>bintray-nincodedo-maven</id>
         <name>nincodedo-maven</name>
-        <url>https://api.bintray.com/maven/nincodedo/maven/recastai-java-api/;publish=1</url>
+        <url>https://api.bintray.com/maven/nincodedo/maven/sap-conversational-ai-java-api/;publish=1</url>
     </repository>
 </distributionManagement>
 </project>
