@@ -3,12 +3,13 @@ package com.nincodedo.sapconversational.conversation;
 import com.nincodedo.sapconversational.SAPConversationalAIAPI;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
+import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -17,24 +18,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 @Data
 @Slf4j
 public class BotConversationImpl implements BotConversation {
 
-    private SAPConversationalAIAPI SAPConversationalAIAPI;
+    private SAPConversationalAIAPI sapConversationalAIAPI;
     private String conversationId;
     private String userInput;
     private List<String> participantList;
 
-    public BotConversationImpl(SAPConversationalAIAPI SAPConversationalAIAPI) {
-        this.SAPConversationalAIAPI = SAPConversationalAIAPI;
+    public BotConversationImpl(SAPConversationalAIAPI sapConversationalAIAPI) {
+        this.sapConversationalAIAPI = sapConversationalAIAPI;
         this.conversationId = "1";
         participantList = new ArrayList<>();
     }
 
-    public BotConversationImpl(SAPConversationalAIAPI SAPConversationalAIAPI, String conversationId) {
-        this.SAPConversationalAIAPI = SAPConversationalAIAPI;
+    public BotConversationImpl(SAPConversationalAIAPI sapConversationalAIAPI, String conversationId) {
+        this.sapConversationalAIAPI = sapConversationalAIAPI;
         this.conversationId = conversationId;
         participantList = new ArrayList<>();
     }
@@ -63,29 +67,47 @@ public class BotConversationImpl implements BotConversation {
         return Optional.empty();
     }
 
-    public Optional<String> getResponse(String input) {
-        this.userInput = input;
-        String sResponse = null;
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost post = new HttpPost("https://api.cai.tools.sap/build/v1/dialog");
-        post.addHeader("Authorization", "Token " + SAPConversationalAIAPI.getToken());
-        post.addHeader("Content-Type", "application/json");
-        val stringEntityOptional = buildStringPostEntity();
-        if (stringEntityOptional.isPresent()) {
-            val stringEntity = stringEntityOptional.get();
-            post.setEntity(stringEntity);
-            JSONObject response;
-            try {
-                response = new JSONObject(EntityUtils.toString(client.execute(post).getEntity()));
-                sResponse = response.getJSONObject("results").getJSONArray("messages").getJSONObject(0).getString("content");
-            } catch (IOException e) {
-                log.error("Failed to read response", e);
-                return Optional.empty();
-            }
-        }
-        return Optional.ofNullable(sResponse);
+    public Future<Optional<String>> getResponse(String input){
+        CompletableFuture<Optional<String>> completableFuture = new CompletableFuture<>();
+        Executors.newCachedThreadPool().submit(() -> {
+            this.userInput = input;
+            HttpEntity entity = postResponseRequest();
+            completableFuture.complete(getResponseFromEntity(entity));
+            return null;
+        });
+        return completableFuture;
     }
 
+    private HttpEntity postResponseRequest() {
+        try (CloseableHttpClient client = HttpClients.createDefault()) {
+            HttpPost post = new HttpPost("https://api.cai.tools.sap/build/v1/dialog");
+            post.addHeader("Authorization", "Token " + sapConversationalAIAPI.getToken());
+            post.addHeader("Content-Type", "application/json");
+            Optional<StringEntity> stringEntityOptional = buildStringPostEntity();
+            if (stringEntityOptional.isPresent()) {
+                StringEntity stringEntity = stringEntityOptional.get();
+                post.setEntity(stringEntity);
+                return client.execute(post).getEntity();
+            }
+        } catch (IOException e) {
+            log.error("Failed to post request", e);
+        }
+        return null;
+    }
+
+    private Optional<String> getResponseFromEntity(HttpEntity entity) {
+        try {
+            JSONObject response = new JSONObject(EntityUtils.toString(entity));
+            JSONArray messages = response.getJSONObject("results").getJSONArray("messages");
+            if (messages.isEmpty()) {
+                return Optional.empty();
+            }
+            return Optional.of(messages.getJSONObject(0).getString("content"));
+        } catch (IOException e) {
+            log.error("Failed to read response", e);
+            return Optional.empty();
+        }
+    }
 
     public void addParticipants(String... participants) {
         participantList.addAll(Arrays.asList(participants));

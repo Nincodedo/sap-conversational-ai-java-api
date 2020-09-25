@@ -1,9 +1,10 @@
 package com.nincodedo.sapconversational.conversation;
 
 import java.util.Optional;
+import java.util.concurrent.Future;
 
 public interface BotConversation {
-    Optional<String> getResponse(String input);
+    Future<Optional<String>> getResponse(String input);
 
     void addParticipants(String... participants);
 }
