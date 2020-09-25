@@ -1,4 +1,4 @@
-package com.nincodedo.sapconversational.conversation;
+package dev.nincodedo.sapconversational.conversation;
 
 import java.util.Optional;
 import java.util.concurrent.Future;

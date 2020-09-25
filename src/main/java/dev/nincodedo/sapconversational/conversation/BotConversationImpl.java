@@ -1,6 +1,6 @@
-package com.nincodedo.sapconversational.conversation;
+package dev.nincodedo.sapconversational.conversation;
 
-import com.nincodedo.sapconversational.SAPConversationalAIAPI;
+import dev.nincodedo.sapconversational.SAPConversationalAIAPI;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
@@ -67,7 +67,7 @@ public class BotConversationImpl implements BotConversation {
         return Optional.empty();
     }
 
-    public Future<Optional<String>> getResponse(String input){
+    public Future<Optional<String>> getResponse(String input) {
         CompletableFuture<Optional<String>> completableFuture = new CompletableFuture<>();
         Executors.newCachedThreadPool().submit(() -> {
             this.userInput = input;
