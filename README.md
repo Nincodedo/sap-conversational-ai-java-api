@@ -1,2 +1,2 @@
-# sap-conversational-ai-java-api-java-api
+# sap-conversational-ai-java-api
 Unofficial SAP Conversational AI Java api

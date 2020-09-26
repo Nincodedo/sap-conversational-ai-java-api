@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.nincodedo</groupId>
+    <groupId>dev.nincodedo</groupId>
     <artifactId>sap-conversational-ai-java-api</artifactId>
     <version>0.0.3-SNAPSHOT</version>
     <dependencies>
@@ -65,10 +65,10 @@
         </plugins>
     </build>
     <distributionManagement>
-    <repository>
-        <id>bintray-nincodedo-maven</id>
-        <name>nincodedo-maven</name>
-        <url>https://api.bintray.com/maven/nincodedo/maven/sap-conversational-ai-java-api/;publish=1</url>
-    </repository>
-</distributionManagement>
+        <repository>
+            <id>bintray-nincodedo-maven</id>
+            <name>nincodedo-maven</name>
+            <url>https://api.bintray.com/maven/nincodedo/maven/sap-conversational-ai-java-api/;publish=1</url>
+        </repository>
+    </distributionManagement>
 </project>
