@@ -1,6 +1,6 @@
-package com.nincodedo.sapconversational;
+package dev.nincodedo.sapconversational;
 
-import com.nincodedo.sapconversational.conversation.BotConversation;
+import dev.nincodedo.sapconversational.conversation.BotConversation;
 
 public interface SAPConversationalAIAPI {
     String getToken();

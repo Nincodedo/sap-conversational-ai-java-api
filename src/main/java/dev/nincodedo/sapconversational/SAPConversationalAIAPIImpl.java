@@ -1,7 +1,7 @@
-package com.nincodedo.sapconversational;
+package dev.nincodedo.sapconversational;
 
-import com.nincodedo.sapconversational.conversation.BotConversation;
-import com.nincodedo.sapconversational.conversation.BotConversationImpl;
+import dev.nincodedo.sapconversational.conversation.BotConversation;
+import dev.nincodedo.sapconversational.conversation.BotConversationImpl;
 
 class SAPConversationalAIAPIImpl implements SAPConversationalAIAPI {
 

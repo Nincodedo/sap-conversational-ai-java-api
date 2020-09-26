@@ -1,4 +1,4 @@
-package com.nincodedo.sapconversational;
+package dev.nincodedo.sapconversational;
 
 public class SAPConversationalAIAPIBuilder {
 
