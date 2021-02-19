@@ -6,7 +6,7 @@
 
     <groupId>dev.nincodedo</groupId>
     <artifactId>sap-conversational-ai-java-api</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
